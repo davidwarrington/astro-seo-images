@@ -15,13 +15,17 @@ function readDirRecursively(directory: string): string[] {
   });
 }
 
+function getUnique<T>(array: T[]) {
+  return [...new Set(array)];
+}
+
 interface Config {
   routes: string[];
   size?: {
     height: number;
     width: number;
   };
-  puppeteerClusterOptions?: Parameters<(typeof Cluster)['launch']>[0];
+  puppeteerClusterOptions?: Parameters<typeof Cluster['launch']>[0];
 }
 
 export function socialImages(
@@ -50,15 +54,11 @@ export function socialImages(
           (file) => `/${relative(dir.pathname, file)}`
         );
 
-        const filesToScreenshot = [
-          ...new Set(
-            routesToGenerate.flatMap((route) =>
-              distFiles.filter((file) => {
-                return route.pattern.test(dirname(file));
-              })
-            )
-          ),
-        ];
+        const filesToScreenshot = getUnique(
+          routesToGenerate.flatMap((route) =>
+            distFiles.filter((file) => route.pattern.test(dirname(file)))
+          )
+        );
 
         if (filesToScreenshot.length === 0) {
           return;

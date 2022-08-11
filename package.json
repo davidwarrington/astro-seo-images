@@ -1,0 +1,30 @@
+{
+  "name": "astro-seo-images",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "rollup -c -w",
+    "build": "rollup -c"
+  },
+  "keywords": [],
+  "files": [
+    "dist"
+  ],
+  "author": {
+    "name": "David Warrington"
+  },
+  "homepage": "https://github.com/davidwarrington/astro-seo-images",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-typescript": "^8.3.4",
+    "@types/node": "^18.7.1",
+    "eslint": "^8.21.0",
+    "rollup": "^2.77.3",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.4"
+  }
+}

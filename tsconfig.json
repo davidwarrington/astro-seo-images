@@ -1,9 +1,13 @@
 {
   "compilerOptions": {
+    "declaration": true,
+    "outDir": "./lib",
     "target": "es6",
     "module": "esnext",
     "moduleResolution": "node",
     "strict": true,
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": ["./src/**/*"]
 }

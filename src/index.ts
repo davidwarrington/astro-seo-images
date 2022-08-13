@@ -28,7 +28,7 @@ interface Config {
   puppeteerClusterOptions?: Parameters<typeof Cluster['launch']>[0];
 }
 
-export function socialImages(
+export default function socialImages(
   {
     routes: imageRoutes,
     size: imageSize = {

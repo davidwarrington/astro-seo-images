@@ -4,9 +4,21 @@ Use Astro templates to generate social images for your Astro build
 
 ## Usage
 
+## Install
+
+```bash
+pnpm install --save-dev astro-seo-images
+
+# or if you prefer yarn
+yarn add --dev astro-seo-images
+
+# or if you prefer npm
+npm install --save-dev astro-seo-images
+```
+
 ### Create your template(s)
 
-This example is at `/src/pages/blug/[slug]/card.astro`. You can visit this page whilst running in dev move to check how it will look.
+This example is at `/src/pages/blug/[slug]/card.astro`. You can visit this page whilst running in dev mode to check how it will look.
 
 You can create any template you like here. Import CSS, JavaScript and images to your hearts content.
 

@@ -1,16 +1,16 @@
 {
   "name": "astro-seo-images",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Use Astro templates to generate social images for your Astro build",
   "main": "lib/index.js",
-  "mains": "lib/index.d.ts",
+  "types": "lib/index.d.ts",
   "type": "module",
   "scripts": {
-    "build": "tsc"
+    "build": "rm ./lib/* && tsc",
+    "prepare": "pnpm run build"
   },
   "keywords": [
-    "astro",
-    "astro-integration"
+    "astro"
   ],
   "files": [
     "lib"
@@ -19,6 +19,9 @@
     "name": "David Warrington"
   },
   "homepage": "https://github.com/davidwarrington/astro-seo-images",
+  "bugs": {
+    "url": "https://github.com/davidwarrington/astro-seo-images/issues"
+  },
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^18.7.1",

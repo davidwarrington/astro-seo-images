@@ -1,6 +1,6 @@
 {
   "name": "astro-seo-images",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Use Astro templates to generate social images for your Astro build",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -10,7 +10,8 @@
     "prepare": "pnpm run build"
   },
   "keywords": [
-    "astro"
+    "astro",
+    "astro-integration"
   ],
   "files": [
     "lib"
@@ -25,7 +26,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^18.7.1",
-    "astro": "^1.0.3",
+    "astro": "^1.0.4",
     "eslint": "^8.21.0",
     "typescript": "^4.7.4"
   },

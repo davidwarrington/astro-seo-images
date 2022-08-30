@@ -18,7 +18,7 @@ npm install --save-dev astro-seo-images
 
 ### Create your template(s)
 
-This example is at `/src/pages/blug/[slug]/card.astro`. You can visit this page whilst running in dev mode to check how it will look.
+This example is at `/src/pages/blog/[slug]/card.astro`. You can visit this page whilst running in dev mode to check how it will look.
 
 You can create any template you like here. Import CSS, JavaScript and images to your hearts content.
 
@@ -53,7 +53,7 @@ Add the integration to your Astro config. The `routes` property is required. For
 
 ```ts
 import { defineConfig } from 'astro/config';
-import { socialImages } from 'astro-seo-images';
+import socialImages from 'astro-seo-images';
 
 export default defineConfig({
   integrations: [

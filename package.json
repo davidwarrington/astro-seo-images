@@ -6,7 +6,7 @@
   "types": "lib/index.d.ts",
   "type": "module",
   "scripts": {
-    "build": "rm ./lib/* && tsc",
+    "build": "rm -f ./lib/* && tsc",
     "prepare": "pnpm run build"
   },
   "keywords": [

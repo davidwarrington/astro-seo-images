@@ -25,7 +25,7 @@ interface Config {
     height: number;
     width: number;
   };
-  puppeteerClusterOptions?: Parameters<typeof Cluster['launch']>[0];
+  puppeteerClusterOptions?: Parameters<(typeof Cluster)['launch']>[0];
 }
 
 export default function socialImages(
@@ -67,6 +67,9 @@ export default function socialImages(
         const cluster: Cluster<string, void> = await Cluster.launch({
           concurrency: Cluster.CONCURRENCY_CONTEXT,
           maxConcurrency: 10,
+          puppeteerOptions: {
+            headless: 'new',
+          },
           ...puppeteerClusterOptions,
         });
 

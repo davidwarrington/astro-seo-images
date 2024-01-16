@@ -2,11 +2,11 @@
   "name": "astro-seo-images",
   "version": "1.0.0",
   "description": "Use Astro templates to generate social images for your Astro build",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "build": "rm -f ./lib/* && tsc",
+    "build": "rm -f ./dist/* && tsc",
     "prepare": "pnpm run build"
   },
   "keywords": [
@@ -14,7 +14,7 @@
     "astro-integration"
   ],
   "files": [
-    "lib"
+    "dist"
   ],
   "author": {
     "name": "David Warrington"

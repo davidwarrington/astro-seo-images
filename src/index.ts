@@ -68,7 +68,7 @@ export default function socialImages(
           concurrency: Cluster.CONCURRENCY_CONTEXT,
           maxConcurrency: 10,
           puppeteerOptions: {
-            headless: 'new',
+            headless: true,
           },
           ...puppeteerClusterOptions,
         });

@@ -1,14 +1,14 @@
 import { readdirSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { AstroIntegration } from 'astro';
-import { Cluster } from 'puppeteer-cluster';
+import type { AstroIntegration, IntegrationResolvedRoute } from 'astro';
+import { Cluster } from 'playwright-cluster';
 
-function readDirRecursively(directory: string): string[] {
-  return readdirSync(directory, { withFileTypes: true }).flatMap((path) => {
+function readDirectoryRecursively(directory: string): string[] {
+  return readdirSync(directory, { withFileTypes: true }).flatMap(path => {
     const fullPath = join(directory, path.name);
     if (path.isDirectory()) {
-      return readDirRecursively(fullPath);
+      return readDirectoryRecursively(fullPath);
     }
 
     return fullPath;
@@ -28,36 +28,42 @@ interface Config {
   puppeteerClusterOptions?: Parameters<(typeof Cluster)['launch']>[0];
 }
 
-export default function socialImages(
-  {
-    routes: imageRoutes,
-    size: imageSize = {
-      height: 600,
-      width: 1200,
-    },
-    puppeteerClusterOptions = {},
-  }: Config = { routes: [] }
-): AstroIntegration {
+export default function socialImages({
+  routes: imageRoutes,
+  size: imageSize = {
+    height: 600,
+    width: 1200,
+  },
+  puppeteerClusterOptions = {},
+}: Config): AstroIntegration {
+  let routes: IntegrationResolvedRoute[] = [];
+
   return {
     name: 'astro-social-images',
     hooks: {
-      'astro:build:done': async ({ dir, routes }) => {
-        const routesToGenerate = routes.filter((route) =>
-          imageRoutes.includes(route.route)
+      'astro:routes:resolved': async ({ routes: resolvedRoutes }) => {
+        routes = resolvedRoutes;
+      },
+
+      'astro:build:done': async ({ dir }) => {
+        const routesToGenerate = routes.filter(route =>
+          imageRoutes.includes(route.pattern),
         );
 
         if (routesToGenerate.length === 0) {
           return;
         }
 
-        const distFiles = readDirRecursively(dir.pathname).map(
-          (file) => `/${relative(dir.pathname, file)}`
+        const distributionFiles = readDirectoryRecursively(dir.pathname).map(
+          file => `/${relative(dir.pathname, file)}`,
         );
 
         const filesToScreenshot = getUnique(
-          routesToGenerate.flatMap((route) =>
-            distFiles.filter((file) => route.pattern.test(dirname(file)))
-          )
+          routesToGenerate.flatMap(route =>
+            distributionFiles.filter(file =>
+              route.patternRegex.test(dirname(file)),
+            ),
+          ),
         );
 
         if (filesToScreenshot.length === 0) {
@@ -67,7 +73,7 @@ export default function socialImages(
         const cluster: Cluster<string, void> = await Cluster.launch({
           concurrency: Cluster.CONCURRENCY_CONTEXT,
           maxConcurrency: 10,
-          puppeteerOptions: {
+          playwrightOptions: {
             headless: true,
           },
           ...puppeteerClusterOptions,
@@ -76,32 +82,33 @@ export default function socialImages(
         await cluster.task(async ({ page, data: file }) => {
           const fullPath = join(dir.pathname, file);
 
-          await page.setViewport(imageSize);
+          await page.setViewportSize(imageSize);
 
-          await page.setRequestInterception(true);
-          page.on('request', (request) => {
+          page.route('**/*', route => {
+            const request = route.request();
+            const resourceType = request.resourceType();
             const url = new URL(request.url());
 
-            if (request.resourceType() !== 'document') {
-              request.continue({
+            if (resourceType === 'document') {
+              route.continue();
+            } else {
+              route.continue({
                 url: join('file://', dir.pathname, url.pathname),
               });
-            } else {
-              request.continue();
             }
           });
 
           await page.goto(`file://${fullPath}`, {
-            waitUntil: 'networkidle0',
+            waitUntil: 'networkidle',
           });
 
           await page.screenshot({
             path: fileURLToPath(new URL(`.${dirname(file)}.png`, dir)),
-            encoding: 'binary',
+            type: 'png',
           });
         });
 
-        filesToScreenshot.forEach((file) => cluster.queue(file));
+        filesToScreenshot.forEach(file => cluster.queue(file));
 
         await cluster.idle();
         await cluster.close();

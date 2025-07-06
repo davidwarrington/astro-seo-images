@@ -9,7 +9,8 @@
     "build": "rm -f ./dist/* && tsc",
     "format": "prettier --write .",
     "lint": "eslint .",
-    "prepare": "pnpm run build"
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm build"
   },
   "keywords": [
     "astro",

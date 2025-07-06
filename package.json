@@ -1,6 +1,6 @@
 {
   "name": "astro-seo-images",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Use Astro templates to generate social images for your Astro build",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

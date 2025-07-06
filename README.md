@@ -52,13 +52,13 @@ const { title } = Astro.props;
 Add the integration to your Astro config. The `routes` property is required. For any file you wish to use as a template just remove `/src/pages` from the beginning of the filepath, and the `.astro` extension, and that will be your route. `routes` accepts an array so if you have multiple templates you wish to use this should work.
 
 ```ts
-import { defineConfig } from "astro/config";
-import socialImages from "astro-seo-images";
+import { defineConfig } from 'astro/config';
+import socialImages from 'astro-seo-images';
 
 export default defineConfig({
   integrations: [
     socialImages({
-      routes: ["/blog/[slug]/card"],
+      routes: ['/blog/[slug]/card'],
     }),
   ],
 });

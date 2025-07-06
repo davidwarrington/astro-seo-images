@@ -25,16 +25,15 @@
   },
   "license": "ISC",
   "dependencies": {
-    "puppeteer": "^23.2.1",
-    "puppeteer-cluster": "^0.24.0"
+    "playwright": "^1.53.2",
+    "playwright-cluster": "^1.0.7"
   },
   "devDependencies": {
-    "@types/node": "^22.5.1",
-    "astro": "^4.15.1",
-    "eslint": "^9.9.1",
-    "typescript": "^5.5.4"
+    "@types/node": "^24.0.10",
+    "astro": "^5.11.0",
+    "typescript": "^5.8.3"
   },
   "peerDependencies": {
-    "astro": "^4.15.1"
+    "astro": "^5.11.0"
   }
 }
